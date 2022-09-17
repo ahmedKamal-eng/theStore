@@ -110,6 +110,7 @@ class StoreCubit extends Cubit<StoreStates> {
             products[i].inCart=false;
           }
       }
+
       emit(RemoveFromCart());
 
     }).catchError((e){
@@ -219,7 +220,7 @@ __________________*/
 
   Future<void> makePayment(context,dynamic total) async {
     try {
-      paymentIntent = await createPaymentIntent('${total}', 'LE');
+      paymentIntent = await createPaymentIntent('${total}', 'USD');
       //Payment Sheet
       await Stripe.instance.initPaymentSheet(
           paymentSheetParameters: SetupPaymentSheetParameters(

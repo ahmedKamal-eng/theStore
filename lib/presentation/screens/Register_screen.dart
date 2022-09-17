@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:the_store/business/app_cubit/app_cubit.dart';
+import 'package:the_store/business/app_cubit/states.dart';
 import 'package:the_store/business/auth/auth_cubit.dart';
 import 'package:the_store/business/auth/auth_states.dart';
 import 'package:the_store/presentation/screens/home.dart';
@@ -127,16 +129,23 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(
                           height: 20,
                         ),
-                        CustomButton(
-                          text: "Register",
-                          onTap: () {
-                            cubit.registerUser(
-                                name: nameController.text,
-                                email: emailController.text,
-                                password: passwordController.text,
-                                phone: phoneController.text);
+                        BlocBuilder<StoreCubit,StoreStates>(
+                          builder: (context,state) {
+                            return CustomButton(
+                              text: "Register",
+                              onTap: () {
+                                cubit.registerUser(
+                                    name: nameController.text,
+                                    email: emailController.text,
+                                    password: passwordController.text,
+                                    phone: phoneController.text);
+                                StoreCubit.get(context).getData();
+                                StoreCubit.get(context).getCategories();
+                                StoreCubit.get(context).getCartsProduct();
 
-                          },
+                              },
+                            );
+                          }
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

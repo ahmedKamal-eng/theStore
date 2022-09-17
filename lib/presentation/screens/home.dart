@@ -29,11 +29,11 @@ class HomeScreen extends StatelessWidget {
                  Icon(Icons.shopping_cart_outlined),
                  Align(
                    alignment: Alignment.bottomRight,
-                   child: cubit.cartProducts.length>0 ? CircleAvatar(
+                   child:CircleAvatar(
                      backgroundColor: Colors.red,
                      radius: 12,
                      child: Text('${cubit.cartItemsNum.toString()}'),
-                   ): null,
+                   ) ,
                  )
                ],
              )),

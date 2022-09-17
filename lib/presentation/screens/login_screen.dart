@@ -4,6 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:the_store/business/app_cubit/app_cubit.dart';
+import 'package:the_store/business/app_cubit/states.dart';
 import 'package:the_store/business/auth/auth_states.dart';
 
 import '../../business/auth/auth_cubit.dart';
@@ -28,6 +30,7 @@ class LoginScreen extends StatelessWidget {
           {
             showToast('login successfully',context: context,backgroundColor: Colors.greenAccent);
             CacheHelper.saveData(key: 'token', value: state.loginModel.loginData!.token );
+
             Navigator.pushNamed(context, HomeScreen.id);
 
           }
@@ -91,12 +94,21 @@ class LoginScreen extends StatelessWidget {
                     SizedBox(
                       height: 20,
                     ),
-                    CustomButton(
+                    BlocBuilder<StoreCubit,StoreStates>(
+                      builder: (context,state) {
+                        return CustomButton(
 
-                      text: "LOGIN",
-                      onTap: (){
-                      cubit.loginUser(emailController.text, passwordController.text);
-                      },
+                          text: "LOGIN",
+                          onTap: (){
+
+                          cubit.loginUser(emailController.text, passwordController.text);
+                          StoreCubit.get(context).getData();
+                          StoreCubit.get(context).getCategories();
+                          StoreCubit.get(context).getCartsProduct();
+
+                          },
+                        );
+                      }
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
